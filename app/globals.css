@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --orange: #F7931E;
+  --yellow: #F5C518;
+  --green: #4CAF50;
+  --green-dark: #2E7D32;
+  --white: #FFFFFF;
+  --bg-light: #FFFDF5;
+  --bg-dark: #0D1A0D;
+  --text-dark: #1A2E1A;
+  --text-muted: #5A6B5A;
+  --gradient: linear-gradient(135deg, #F7931E, #F5C518, #4CAF50);
+  
+  --background: var(--bg-light);
+  --foreground: var(--text-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--bg-light); /* Enforce light mode for food site by default unless requested */
+    --foreground: var(--text-dark);
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-nunito), sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .wa-btn-direct {
+    @apply flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20BA5C] text-white font-bold py-2 px-4 rounded-xl text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full;
+  }
+  .wa-btn-full {
+    @apply flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20BA5C] text-white font-bold py-3 px-6 rounded-xl text-base transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-gradient-brand text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-1;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 outline-none transition-all bg-white text-gray-800 placeholder:text-gray-400;
+    --tw-ring-color: rgba(76, 175, 80, 0.2);
+  }
+}
+
+/* GSAP Defaults */
+.reveal-item {
+  opacity: 0;
+}
+.hero-title, .hero-subtitle, .hero-cta {
+  opacity: 0;
+}
+.product-card {
+  will-change: transform;
+}
