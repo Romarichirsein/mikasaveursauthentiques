@@ -16,8 +16,21 @@ const FEATURES_QUERY = `*[_type == "product" && featured == true][0...3] | order
 
 export const revalidate = 60 // ISR revalidation every 60s
 
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  image: {
+    asset: {
+      _ref: string;
+      _type: 'reference';
+    };
+  };
+  badge?: string;
+}
+
 export default async function Home() {
-  const featuredProducts = await client.fetch(FEATURES_QUERY)
+  const featuredProducts: Product[] = await client.fetch(FEATURES_QUERY)
 
   return (
     <div>
@@ -35,7 +48,7 @@ export default async function Home() {
 
           {featuredProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProducts.map((product: any) => (
+              {featuredProducts.map((product: Product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
@@ -104,7 +117,7 @@ export default async function Home() {
                 <Clock className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-nunito font-bold text-text-dark mb-3">Commande Rapide</h3>
-              <p className="text-text-muted">Quelques clics suffisent pour générer votre commande et l'envoyer via WhatsApp instantanément.</p>
+              <p className="text-text-muted">Quelques clics suffisent pour générer votre commande et l&apos;envoyer via WhatsApp instantanément.</p>
             </div>
 
           </div>
@@ -121,7 +134,7 @@ export default async function Home() {
                 <span className="text-orange-500">Un événement ?</span>
               </h2>
               <p className="text-lg text-text-muted mb-8 text-balance">
-                Pour une commande familiale, un mariage ou toute autre cérémonie, n'hésitez pas à nous écrire. Nous vous proposerons un devis personnalisé.
+                Pour une commande familiale, un mariage ou toute autre cérémonie, n&apos;hésitez pas à nous écrire. Nous vous proposerons un devis personnalisé.
               </p>
               
               <ul className="space-y-4 mb-8">

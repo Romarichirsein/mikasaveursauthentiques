@@ -56,7 +56,7 @@ export default function ContactPage() {
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-text-dark text-lg mb-1">Horaires d'ouverture</h3>
+                  <h3 className="font-bold text-text-dark text-lg mb-1">Horaires d&apos;ouverture</h3>
                   <p className="text-gray-600 text-lg">
                     <span className="font-medium text-text-dark">Lundi - Vendredi :</span> 10h00 - 17h00<br />
                     <span className="font-medium text-text-dark">Week-end :</span> Sur commandes familiales

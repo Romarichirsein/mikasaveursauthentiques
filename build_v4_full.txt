@@ -1,0 +1,197 @@
+﻿
+> template@0.1.0 build
+> next build
+
+  Ôû▓ Next.js 14.2.15
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ Ô£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+Au caractère Ligne:1 
+: 1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (:String) [   
+ ], RemoteExceptio    
+n
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+Failed to compile.
+
+./app/catalogue/Catalo
+gueClient.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/catalogue/page.t
+sx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/commande/page.ts
+x
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/contact/page.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/layout.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/page.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/studio/[[...inde
+x]]/layout.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./app/studio/[[...inde
+x]]/page.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/CartTable
+.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/CategoryF
+ilter.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/ContactWh
+atsApp.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/Footer.ts
+x
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/HeroSecti
+on.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/Navbar.ts
+x
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/ProductCa
+rd.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./components/ScrollPro
+gress.tsx
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./lib/gsap.ts
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+./lib/whatsapp.ts
+1:1  Error: 
+Definition for rule '@
+typescript-eslint/no-u
+nused-vars' was not 
+found.  @typescript-es
+lint/no-unused-vars
+
+info  - Need to 
+disable some ESLint 
+rules? Learn more 
+here: https://nextjs.o
+rg/docs/basic-features
+/eslint#disabling-rule
+s

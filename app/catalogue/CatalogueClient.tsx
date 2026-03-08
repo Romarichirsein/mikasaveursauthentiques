@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { ProductCard } from '@/components/ProductCard'
 import { CategoryFilter } from '@/components/CategoryFilter'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { gsap } from '@/lib/gsap'
 
 interface AppCategory {
   _id: string
@@ -15,7 +15,13 @@ interface AppProduct {
   _id: string
   name: string
   price: number
-  image: any
+    image: {
+      asset: {
+        _ref: string;
+        _type: 'reference';
+      };
+    }
+
   badge?: string
   categoryId?: string
 }
@@ -68,7 +74,7 @@ export default function CatalogueClient({ initialCategories, initialProducts }: 
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-nunito font-extrabold text-text-dark mb-6">Notre Catalogue</h1>
           <p className="text-lg text-text-muted max-w-2xl mx-auto text-balance">
-            Découvrez l'ensemble de nos jus pressés à froid et nos plats faits maison.
+            Découvrez l&apos;ensemble de nos jus pressés à froid et nos plats faits maison.
           </p>
         </div>
 

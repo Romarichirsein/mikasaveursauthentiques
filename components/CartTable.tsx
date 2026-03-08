@@ -107,7 +107,7 @@ export function CartTable() {
               Vider le panier
             </button>
             <Link href="/catalogue" className="text-green-600 hover:text-green-800 font-medium font-nunito text-lg">
-              ↑ Ajouter d'autres produits
+              ↑ Ajouter d&apos;autres produits
             </Link>
           </div>
         </div>

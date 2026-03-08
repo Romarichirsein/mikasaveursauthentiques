@@ -10,7 +10,12 @@ interface ProductCardProps {
     _id: string
     name: string
     price: number
-    image: any
+    image: {
+      asset: {
+        _ref: string;
+        _type: 'reference';
+      };
+    }
     badge?: string
   }
 }
