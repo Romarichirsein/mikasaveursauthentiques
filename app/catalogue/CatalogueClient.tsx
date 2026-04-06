@@ -1,118 +1,167 @@
 'use client'
 
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Search, SlidersHorizontal, PackageX } from 'lucide-react'
 import { ProductCard } from '@/components/ProductCard'
 import { CategoryFilter } from '@/components/CategoryFilter'
-import { gsap } from '@/lib/gsap'
 
-interface AppCategory {
+interface Category {
   _id: string
   name: string
-  slug: { current: string }
+  slug: string
 }
 
-interface AppProduct {
+interface Product {
   _id: string
   name: string
   price: number
-    image: {
-      asset: {
-        _ref: string;
-        _type: 'reference';
-      };
-    }
-
+  image: any
   badge?: string
-  categoryId?: string
+  categoryId: string
 }
 
 interface CatalogueClientProps {
-  initialCategories: AppCategory[]
-  initialProducts: AppProduct[]
+  initialCategories: Category[]
+  initialProducts: Product[]
 }
 
 export default function CatalogueClient({ initialCategories, initialProducts }: CatalogueClientProps) {
-  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null)
-  
+  const [activeCategory, setActiveCategory] = useState<string>('all')
+  const [searchQuery, setSearchQuery] = useState('')
+
   const filteredProducts = useMemo(() => {
-    if (!activeCategoryId) return initialProducts
-    return initialProducts.filter(p => p.categoryId === activeCategoryId)
-  }, [activeCategoryId, initialProducts])
-
-  // GSAP Animations
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    const ctx = gsap.context(() => {
-      // Animation grille de produits
-      const cards = gsap.utils.toArray<HTMLElement>('.product-card')
-      if (cards.length > 0) {
-        gsap.killTweensOf(cards) // Clean up any active tweens on cards
-        gsap.fromTo(cards, 
-          { opacity: 0, y: 40, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.5,
-            ease: 'back.out(1.2)',
-            stagger: 0.08,
-            onComplete: () => ScrollTrigger.refresh()
-          }
-        )
-      }
+    return initialProducts.filter(product => {
+      const matchesCategory = activeCategory === 'all' || product.categoryId === activeCategory
+      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesCategory && matchesSearch
     })
-
-    return () => ctx.revert()
-  }, [filteredProducts]) // Re-run when products change (filtering)
+  }, [activeCategory, searchQuery, initialProducts])
 
   return (
-    <div className="min-h-screen bg-bg-light pt-32 pb-24">
+    <div className="min-h-screen bg-gray-50 pb-20 pt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-nunito font-extrabold text-text-dark mb-6">Notre Catalogue</h1>
-          <p className="text-lg text-text-muted max-w-2xl mx-auto text-balance">
-            Découvrez l&apos;ensemble de nos jus pressés à froid et nos plats faits maison.
-          </p>
+        {/* En-tête de la page */}
+        <div className="mb-12 text-center">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-6xl font-nunito font-extrabold text-text-dark mb-4"
+          >
+            Notre <span className="text-green-600">Catalogue</span>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-text-muted text-lg max-w-2xl mx-auto"
+          >
+            Découvrez l'ensemble de nos jus pressés à froid et nos plats faits maison. 
+            Le goût naturel, la saveur authentique.
+          </motion.p>
         </div>
 
-        {/* Filtres */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12 sm:mb-16 pb-4 overflow-x-auto hide-scrollbar">
-          <CategoryFilter 
-            active={activeCategoryId === null} 
-            label="Tout" 
-            onClick={() => setActiveCategoryId(null)} 
-          />
-          {initialCategories.map(cat => (
-            <CategoryFilter 
-              key={cat._id}
-              active={activeCategoryId === cat._id}
-              label={cat.name}
-              onClick={() => setActiveCategoryId(cat._id)}
-            />
-          ))}
+        {/* Barre de recherche et Filtres */}
+        <div className="sticky top-24 z-30 mb-10 space-y-6">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
+            
+            {/* Recherche */}
+            <div className="relative w-full md:max-w-md group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-green-500 transition-colors" />
+              <input 
+                type="text" 
+                placeholder="Rechercher un produit..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-green-500 focus:bg-white transition-all outline-none"
+              />
+            </div>
+
+            {/* Filtres de Catégories (Desktop) */}
+            <div className="hidden md:flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+              <div className="flex items-center gap-2 whitespace-nowrap">
+                <CategoryFilter 
+                  label="Tout voir" 
+                  active={activeCategory === 'all'} 
+                  onClick={() => setActiveCategory('all')} 
+                />
+                {initialCategories.map((category) => (
+                  <CategoryFilter 
+                    key={category._id}
+                    label={category.name} 
+                    active={activeCategory === category._id} 
+                    onClick={() => setActiveCategory(category._id)} 
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="md:hidden flex items-center gap-2 w-full overflow-x-auto pb-2 no-scrollbar">
+               <CategoryFilter 
+                  label="Tout" 
+                  active={activeCategory === 'all'} 
+                  onClick={() => setActiveCategory('all')} 
+                />
+                {initialCategories.map((category) => (
+                  <CategoryFilter 
+                    key={category._id}
+                    label={category.name} 
+                    active={activeCategory === category._id} 
+                    onClick={() => setActiveCategory(category._id)} 
+                  />
+                ))}
+            </div>
+          </div>
         </div>
 
-        {/* Grille Produits */}
-        {filteredProducts.length > 0 ? (
-          <div className="products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {filteredProducts.map(product => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 mt-8">
-            <p className="text-xl text-gray-500 font-medium">Aucun produit dans cette catégorie pour le moment.</p>
-            <button 
-              onClick={() => setActiveCategoryId(null)}
-              className="mt-6 text-green-600 font-bold hover:underline"
-            >
-              Voir tout le catalogue
-            </button>
-          </div>
-        )}
+        {/* Grille de Produits */}
+        <div className="relative min-h-[400px]">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {filteredProducts.length > 0 ? (
+              <motion.div 
+                layout
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8"
+              >
+                {filteredProducts.map((product) => (
+                  <motion.div
+                    layout
+                    key={product._id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ProductCard product={product} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center justify-center py-20 text-center"
+              >
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6 text-gray-400">
+                  <PackageX className="w-10 h-10" />
+                </div>
+                <h3 className="text-xl font-bold text-text-dark mb-2">Aucun produit trouvé</h3>
+                <p className="text-text-muted max-w-xs">
+                  Nous n'avons pas trouvé de produits correspondant à votre recherche ou à cette catégorie.
+                </p>
+                <button 
+                  onClick={() => {
+                    setActiveCategory('all')
+                    setSearchQuery('')
+                  }}
+                  className="mt-6 text-green-600 font-bold hover:underline"
+                >
+                  Réinitialiser les filtres
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
       </div>
     </div>
